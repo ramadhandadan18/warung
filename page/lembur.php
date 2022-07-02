@@ -12,10 +12,10 @@ switch ($_GET['act']) {
 
         <!-- Content Header (Page header) -->
         <section class="content-header">
-          <h1> Data Kategori menu </h1>
+          <h1> Data lembur </h1>
           <ol class="breadcrumb">
             <li><a href="?pg=dashboard"><i class="fa fa-dashboard"></i> Beranda</a></li>
-            <li class="active"><a href="?pg=kategori&act=view">Data Kategori menu</a></li>
+            <li class="active"><a href="?pg=kategori&act=view">Data Lembur</a></li>
           </ol>
         </section>
 
@@ -27,7 +27,7 @@ switch ($_GET['act']) {
               <div class="box box-info">
                 <div class="box-header">
                   <i class="fa fa-list"></i>
-                  <h3 class="box-title">Kategori Menu</h3>
+                  <h3 class="box-title">Lembur</h3>
                   <!-- tools box -->
                   <div class="pull-right box-tools">
                     <button class="btn btn-info btn-sm pull-right" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
@@ -35,33 +35,33 @@ switch ($_GET['act']) {
                   </div><!-- /. tools -->
                 </div>
                 <div class="box-body">
-                  <a href="?pg=kategori&act=add"> <button type="button" class="btn btn-danger" style="background-color: #dd3974 !important;"><i class="fa fa-plus"> Tambah Data </i></button> </a>
+                  <a href="?pg=lembur&act=add"> <button type="button" class="btn btn-danger" style="background-color: #dd3974 !important;"><i class="fa fa-plus"> Tambah Data </i></button> </a>
 
                   <div class="table-responsive">
                     <table id="example1" class="table table-bordered table-striped">
                       <thead>
                         <tr>
                           <th>No</th>
-                          <th>Nama Kategori</th>
-                          <th>Ket</th>
+                          <th>Nama Karyawan</th>
+                          <th>Jam Lembur</th>
                           <th>Edit</th>
                           <th>Delete</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php
-                        $tampil = $mysqli->query("SELECT * FROM kategori_menu
-                   order by id asc");
+                        $tampil = $mysqli->query("SELECT * FROM lembur
+                   order by id_lembur asc");
                         $no = 1;
                         while ($r = mysqli_fetch_array($tampil)) {
                         ?>
                           <tr>
                             <td><?php echo "$no" ?></td>
-                            <td><?php echo "$r[nama_kategori]" ?></td>
-                            <td><?php echo "$r[ket]" ?></td>
+                            <td><?php echo "$r[nama]" ?></td>
+                            <td><?php echo "$r[jam]" ?></td>
 
-                            <td><a href="?pg=kategori&act=edit&id=<?php echo $r['id'] ?>"><button type="button" class="btn bg-orange"><i class="fa fa-pencil-square-o"></i></button></a></td>
-                            <td><a href="?pg=kategori&act=delete&id=<?php echo $r['id'] ?>"><button type="button" class="btn btn-info" onclick="return confirm('Apakah anda yakin akan menghapusnya?');"><i class="fa fa-trash-o"></i></button></a></td>
+                            <td><a href="?pg=kategori&act=edit&id_embur=<?php echo $r['id_embur'] ?>"><button type="button" class="btn bg-orange"><i class="fa fa-pencil-square-o"></i></button></a></td>
+                            <td><a href="?pg=kategori&act=delete&id_embur=<?php echo $r['id_embur'] ?>"><button type="button" class="btn btn-info" onclick="return confirm('Apakah anda yakin akan menghapusnya?');"><i class="fa fa-trash-o"></i></button></a></td>
                           </tr>
 
                         <?php
@@ -85,8 +85,8 @@ switch ($_GET['act']) {
     // PROSES TAMBAH DATA menu //
   case 'add':
     if (isset($_POST['add'])) {
-      $query = $mysqli->query("INSERT INTO kategori_menu (id,nama_kategori, ket) VALUES ('','$_POST[nama_kategori]','$_POST[ket]') ");
-      echo "<script>window.location='home.php?pg=kategori&act=view'</script>";
+      $query = $mysqli->query("INSERT INTO lembur (id_embur,nama, jam) VALUES ('','$_POST[nama]','$_POST[jam]') ");
+      echo "<script>window.location='home.php?pg=lembur&act=view'</script>";
     }
   ?>
 
@@ -95,11 +95,11 @@ switch ($_GET['act']) {
 
         <!-- Content Header (Page header) -->
         <section class="content-header">
-          <h1> Data menu </h1>
+          <h1> Data Karyawan </h1>
           <ol class="breadcrumb">
             <li><a href="?pg=dashboard"><i class="fa fa-dashboard"></i> Beranda</a></li>
-            <li class="active"><a href="?pg=kategori&act=view">Data menu</a></li>
-            <li class="active"><a href="#">Tambah Data menu</a></li>
+            <li class="active"><a href="?pg=kategori&act=view">Data Karyawan</a></li>
+            <li class="active"><a href="#">Tambah Data</a></li>
           </ol>
         </section>
 
@@ -114,12 +114,13 @@ switch ($_GET['act']) {
                   <form role="form" method="POST" action="">
                     <div class="box-body">
                       <div class="form-group">
-                        <label class="form-label">Nama Kategori menu</label>
-                        <input name="nama_kategori" type="text" class="form-control" required>
+                        <label class="form-label">Nama Karyawan</label>
+                        <select name="nama" class="form-control" multiple="multiple" required>
+                        </select>
                       </div>
                       <div class="form-group">
-                        <label class="form-label">Keterangan</label>
-                        <input name="ket" type="text" class="form-control" required>
+                        <label class="form-label">Jam Lembur</label>
+                        <input name="jam" type="text" class="form-control" required>
                       </div>
                       </select>
                     </div>
@@ -159,13 +160,13 @@ switch ($_GET['act']) {
     break;
     // PROSES EDIT DATA menu //
   case 'edit':
-    $d = mysqli_fetch_array($mysqli->query("SELECT * FROM kategori_menu WHERE id='$_GET[id]'"));
+    $d = mysqli_fetch_array($mysqli->query("SELECT * FROM lembur WHERE id_embur='$_GET[id_embur]'"));
     if (isset($_POST['update'])) {
 
-      $mysqli->query("UPDATE kategori_menu SET nama_kategori='$_POST[nama_kategori]', 
-    ket='$_POST[ket]'
-    WHERE id='$_POST[id]'");
-      echo "<script>window.location='home.php?pg=kategori&act=view'</script>";
+      $mysqli->query("UPDATE lembur SET nama='$_POST[nama]', 
+    jam='$_POST[jam]'
+    WHERE id_embur='$_POST[id_embur]'");
+      echo "<script>window.location='home.php?pg=lembur&act=view'</script>";
     }
   ?>
 
@@ -174,11 +175,11 @@ switch ($_GET['act']) {
 
         <!-- Content Header (Page header) -->
         <section class="content-header">
-          <h1> Data menu </h1>
+          <h1> Data Lembur </h1>
           <ol class="breadcrumb">
             <li><a href="?pg=dashboard"><i class="fa fa-dashboard"></i> Beranda</a></li>
-            <li class="active"><a href="?pg=kategori&act=view">Data menu</a></li>
-            <li class="active">Update Data menu</li>
+            <li class="active"><a href="?pg=kategori&act=view">Data Lembur</a></li>
+            <li class="active">Update Data Lembur</li>
           </ol>
         </section>
 
@@ -192,14 +193,14 @@ switch ($_GET['act']) {
                   <!-- form start -->
                   <form role="form" method="POST" action="">
                     <div class="box-body">
-                      <input type="hidden" class="form-control" id="id" name="id" required value="<?php echo $d['id']; ?>">
+                      <input type="hidden" class="form-control" id="id_embur" name="id_embur" required value="<?php echo $d['id_embur']; ?>">
                       <div class="form-group">
-                        <label class="form-label">Nama Kategori</label>
-                        <input name="nama_kategori" type="text" class="form-control" value="<?php echo $d['nama_kategori']; ?>" required>
+                        <label class="form-label">Nama Karyawan</label>
+                        <input name="nama" type="text" class="form-control" value="<?php echo $d['nama']; ?>" required>
                       </div>
                       <div class="form-group">
-                        <label class="form-label">Keterangan</label>
-                        <input name="ket" type="text" class="form-control" value="<?php echo $d['ket']; ?>">
+                        <label class="form-label">Jam</label>
+                        <input name="jam" type="text" class="form-control" value="<?php echo $d['jam']; ?>">
                       </div>
 
 

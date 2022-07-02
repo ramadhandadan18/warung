@@ -110,7 +110,7 @@
       <div class="row">
         <!-- Left col -->
         <section class="col-md-12 connectedSortable">
-          <div class="callout callout-danger" style="background-color: #red !important;">
+          <div class="callout callout-danger" style="background-color: red !important">
             <h4>Selamat Datang "<?php echo strtoupper($_SESSION['username']); ?>"</h4>
             <p>DI APLIKASI DIGITAL MENU CAFE ROADWAY COFFEE</p>
           </div>

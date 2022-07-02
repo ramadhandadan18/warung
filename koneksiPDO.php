@@ -4,7 +4,7 @@ include_once("config/function.php");
 $db_host = "localhost";
 $db_user = "root";
 $db_pass = "";
-$db_name = "db_warung";
+$db_name = "warung";
 
 try {
     //create PDO connection 

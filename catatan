@@ -1,0 +1,11 @@
+(cooding halaman daftar log in )
+      <div class="social-auth-links text-center mt-2 mb-3">
+        <a href="register.php" class="btn btn-block btn-primary">
+          <i class="fa fa-sign-in mr-2"></i> Daftar Sekarang
+        </a>
+        <!-- <a href="admin.php" class="btn btn-block btn-danger">
+          <i class="fa fa-lock mr-2"></i> Login Admin
+        </a> -->
+      </div>
+
+(cooding halaman daftar log in )

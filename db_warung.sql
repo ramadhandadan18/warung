@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 30, 2021 at 06:27 AM
--- Server version: 10.1.31-MariaDB
--- PHP Version: 5.6.34
+-- Generation Time: Jul 05, 2022 at 04:19 PM
+-- Server version: 10.4.14-MariaDB
+-- PHP Version: 7.4.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -25,6 +24,29 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `absensi`
+--
+
+CREATE TABLE `absensi` (
+  `id_absen` int(11) NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `tgl_masuk` date DEFAULT NULL,
+  `jam` time DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `absensi`
+--
+
+INSERT INTO `absensi` (`id_absen`, `nama`, `tgl_masuk`, `jam`) VALUES
+(2, 'hahahaha', '2022-07-05', '00:00:00'),
+(3, 'kjkjkjkjjk', '2022-07-05', '00:00:00'),
+(4, 'jkjk', '2022-07-05', '00:00:00'),
+(5, 'FFFFFFFFFFFCCCCCCCCCCC', '2022-07-08', '19:44:00');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `akses_user`
 --
 
@@ -32,7 +54,7 @@ CREATE TABLE `akses_user` (
   `id_akses` int(11) NOT NULL,
   `nama` varchar(100) NOT NULL,
   `ket` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `akses_user`
@@ -43,6 +65,58 @@ INSERT INTO `akses_user` (`id_akses`, `nama`, `ket`) VALUES
 (2, 'pimpinan', 'pimpinan perusahaan'),
 (3, 'Kasir', 'Kasir'),
 (4, 'Pelanggan', 'Pelanggan');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `barang`
+--
+
+CREATE TABLE `barang` (
+  `id_barang` int(11) NOT NULL,
+  `tgl` date NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `jumlah` int(11) NOT NULL,
+  `tambah_stok` int(11) NOT NULL,
+  `terjual` int(11) NOT NULL,
+  `sisa` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `barang`
+--
+
+INSERT INTO `barang` (`id_barang`, `tgl`, `nama`, `jumlah`, `tambah_stok`, `terjual`, `sisa`) VALUES
+(1, '2022-07-05', 'Gula', 10, 10, 1, 9),
+(2, '2022-07-05', 'Kecap', 0, 0, 10, 88),
+(3, '2022-07-05', '', 0, 10, 1, 9),
+(4, '2022-07-05', '', 111, 10, 9, 1),
+(5, '2022-07-05', 'KKK', 0, 99, 99, 99),
+(6, '2022-07-05', 'AAA', 0, 99, 99, 99),
+(7, '2022-07-05', 'LLLL', 0, 88, 77, 66),
+(8, '2022-07-05', 'JJJJ', 11, 22, 33, 44),
+(9, '2022-07-05', 'NNNN', 22, 11, 33, 44);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `buka_tutup`
+--
+
+CREATE TABLE `buka_tutup` (
+  `id` int(11) NOT NULL,
+  `tanggal` date DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+
+--
+-- Dumping data for table `buka_tutup`
+--
+
+INSERT INTO `buka_tutup` (`id`, `tanggal`, `status`) VALUES
+(3, '2022-07-03', '0'),
+(4, '2022-07-04', '1'),
+(5, '2022-07-05', '1');
 
 -- --------------------------------------------------------
 
@@ -59,7 +133,7 @@ CREATE TABLE `customers` (
   `notelp` varchar(20) NOT NULL,
   `alamat` text NOT NULL,
   `id_akses` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `customers`
@@ -80,7 +154,7 @@ CREATE TABLE `harga` (
   `id` int(11) NOT NULL,
   `id_menu` int(11) NOT NULL,
   `harga` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `harga`
@@ -233,6 +307,25 @@ INSERT INTO `harga` (`id`, `id_menu`, `harga`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `karyawan`
+--
+
+CREATE TABLE `karyawan` (
+  `id_karyawan` int(11) DEFAULT NULL,
+  `nama` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `karyawan`
+--
+
+INSERT INTO `karyawan` (`id_karyawan`, `nama`) VALUES
+(0, 'hehe'),
+(0, 'hihi');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `kategori_menu`
 --
 
@@ -240,7 +333,7 @@ CREATE TABLE `kategori_menu` (
   `id` int(11) NOT NULL,
   `nama_kategori` varchar(255) NOT NULL,
   `ket` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `kategori_menu`
@@ -269,6 +362,30 @@ INSERT INTO `kategori_menu` (`id`, `nama_kategori`, `ket`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `lembur`
+--
+
+CREATE TABLE `lembur` (
+  `id_lembur` int(11) NOT NULL,
+  `nama` varchar(255) DEFAULT NULL,
+  `jam` time DEFAULT NULL,
+  `tgl` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `lembur`
+--
+
+INSERT INTO `lembur` (`id_lembur`, `nama`, `jam`, `tgl`) VALUES
+(2, 'aa111', '00:00:00', '0000-00-00'),
+(3, 'qqasasas', '00:00:00', '0000-00-00'),
+(4, 'qqqqq', '00:00:00', '0000-00-00'),
+(5, 'qqq', '00:00:00', '0000-00-00'),
+(6, 'XXXXXXXXXXXXXXXXXX', '04:01:00', '2022-07-07');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `menu`
 --
 
@@ -276,9 +393,9 @@ CREATE TABLE `menu` (
   `id` int(11) NOT NULL,
   `id_kategori` int(11) NOT NULL,
   `nama_menu` varchar(255) NOT NULL,
-  `gambar` text,
+  `gambar` text DEFAULT NULL,
   `ket` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `menu`
@@ -313,7 +430,7 @@ CREATE TABLE `pesbuk` (
   `password` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `photo` varchar(255) NOT NULL DEFAULT 'default.svg'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `pesbuk`
@@ -333,7 +450,7 @@ CREATE TABLE `stok` (
   `id_menu` int(11) NOT NULL,
   `stok` int(11) NOT NULL,
   `sisa` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `stok`
@@ -342,13 +459,13 @@ CREATE TABLE `stok` (
 INSERT INTO `stok` (`id`, `id_menu`, `stok`, `sisa`) VALUES
 (1, 4, 12, 143),
 (128, 128, 20, 0),
-(129, 129, 20, 19),
-(130, 130, 20, 19),
+(129, 129, 20, 18),
+(130, 130, 20, 17),
 (131, 131, 20, 0),
-(132, 132, 20, 12),
+(132, 132, 20, 9),
 (133, 133, 20, 0),
 (134, 134, 20, 14),
-(136, 130, 143, 6),
+(136, 130, 143, 4),
 (137, 142, 20, 50),
 (138, 143, 12, 30),
 (139, 144, 12, 0),
@@ -366,7 +483,7 @@ CREATE TABLE `supplier` (
   `id` int(11) NOT NULL,
   `nama` varchar(100) NOT NULL,
   `alamat` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `supplier`
@@ -387,16 +504,16 @@ CREATE TABLE `temp_transaksi_pemesanan` (
   `id_menu` int(11) NOT NULL,
   `jumlah` int(11) NOT NULL,
   `id_harga` int(11) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '0' COMMENT '1=sudah proses, 0 belum proses',
+  `status` int(11) NOT NULL DEFAULT 0 COMMENT '1=sudah proses, 0 belum proses',
   `total` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `temp_transaksi_pemesanan`
 --
 
 INSERT INTO `temp_transaksi_pemesanan` (`id`, `tgl`, `id_menu`, `jumlah`, `id_harga`, `status`, `total`) VALUES
-(11, '2020-12-22', 134, 1, 133, 0, 150000);
+(7, '2022-06-03', 130, 1, 129, 0, 25000);
 
 -- --------------------------------------------------------
 
@@ -412,7 +529,7 @@ CREATE TABLE `transaksi_pembayaran` (
   `total` int(11) NOT NULL,
   `nominal_bayar` int(11) NOT NULL,
   `kembali` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `transaksi_pembayaran`
@@ -440,7 +557,7 @@ CREATE TABLE `transaksi_pembelian` (
   `id_supplier` int(11) NOT NULL,
   `jumlah` int(11) NOT NULL,
   `total` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 -- --------------------------------------------------------
 
@@ -455,19 +572,24 @@ CREATE TABLE `transaksi_pemesanan` (
   `nomer_meja` int(11) NOT NULL,
   `atas_nama` varchar(50) NOT NULL,
   `total` int(15) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '0' COMMENT '0 = belum bayar, 1 = sudah bayar'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `status` int(11) NOT NULL DEFAULT 0 COMMENT '0 = belum bayar, 1 = sudah bayar',
+  `no_hp` varchar(255) DEFAULT NULL,
+  `pembayaran` varchar(255) DEFAULT NULL,
+  `reservasi` varchar(255) DEFAULT NULL,
+  `status_reservasi` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `transaksi_pemesanan`
 --
 
-INSERT INTO `transaksi_pemesanan` (`id`, `kd_transaksi`, `tgl`, `nomer_meja`, `atas_nama`, `total`, `status`) VALUES
-(19, 'PSN21122000003', '2020-12-21', 2, 'Akang Fira', 39000, 1),
-(20, 'PSN21122000004', '2020-12-21', 3, 'Pelanggan 2', 0, 1),
-(21, 'PSN21122000005', '2020-12-21', 0, 'admin', 0, 0),
-(22, 'PSN22122000001', '2020-12-22', 10, 'Pembeli 1', 57500, 1),
-(23, 'PSN22122000002', '2020-12-22', 1, 'Pembeli 2', 75000, 0);
+INSERT INTO `transaksi_pemesanan` (`id`, `kd_transaksi`, `tgl`, `nomer_meja`, `atas_nama`, `total`, `status`, `no_hp`, `pembayaran`, `reservasi`, `status_reservasi`) VALUES
+(1, 'PSN03072200001', '2022-07-03', 333, 'hoho', 47000, 1, '222', 'Cash', 'Reservation', 'Sudah'),
+(19, 'PSN21122000003', '2020-12-21', 2, 'Akang Fira', 39000, 1, NULL, NULL, NULL, NULL),
+(20, 'PSN21122000004', '2020-12-21', 3, 'Pelanggan 2', 0, 1, NULL, NULL, NULL, NULL),
+(21, 'PSN21122000005', '2020-12-21', 0, 'admin', 0, 0, NULL, NULL, NULL, NULL),
+(22, 'PSN22122000001', '2020-12-22', 10, 'Pembeli 1', 57500, 1, NULL, NULL, NULL, NULL),
+(23, 'PSN22122000002', '2020-12-22', 1, 'Pembeli 2', 75000, 0, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -480,13 +602,14 @@ CREATE TABLE `transaksi_pemesanan_detail` (
   `id_pemesanan` int(11) NOT NULL,
   `id_menu` int(11) NOT NULL,
   `porsi` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `transaksi_pemesanan_detail`
 --
 
 INSERT INTO `transaksi_pemesanan_detail` (`id`, `id_pemesanan`, `id_menu`, `porsi`) VALUES
+(0, 0, 130, 1),
 (1, 1, 2, 2),
 (2, 1, 1, 2),
 (3, 2, 1, 5),
@@ -538,7 +661,7 @@ CREATE TABLE `transaksi_penjualan` (
   `id_customer` int(11) NOT NULL,
   `jumlah` int(11) NOT NULL,
   `total` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `transaksi_penjualan`
@@ -559,7 +682,7 @@ CREATE TABLE `users` (
   `password` varchar(32) NOT NULL,
   `status` varchar(5) NOT NULL,
   `id_akses` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `users`
@@ -576,82 +699,212 @@ INSERT INTO `users` (`idusers`, `username`, `password`, `status`, `id_akses`) VA
 --
 
 --
+-- Indexes for table `absensi`
+--
+ALTER TABLE `absensi`
+  ADD PRIMARY KEY (`id_absen`);
+
+--
 -- Indexes for table `akses_user`
 --
 ALTER TABLE `akses_user`
-  ADD PRIMARY KEY (`id_akses`);
+  ADD PRIMARY KEY (`id_akses`) USING BTREE;
+
+--
+-- Indexes for table `barang`
+--
+ALTER TABLE `barang`
+  ADD PRIMARY KEY (`id_barang`);
+
+--
+-- Indexes for table `buka_tutup`
+--
+ALTER TABLE `buka_tutup`
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `customers`
 --
 ALTER TABLE `customers`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `harga`
 --
 ALTER TABLE `harga`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `kategori_menu`
 --
 ALTER TABLE `kategori_menu`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
+
+--
+-- Indexes for table `lembur`
+--
+ALTER TABLE `lembur`
+  ADD PRIMARY KEY (`id_lembur`);
 
 --
 -- Indexes for table `menu`
 --
 ALTER TABLE `menu`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `stok`
 --
 ALTER TABLE `stok`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `supplier`
 --
 ALTER TABLE `supplier`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `temp_transaksi_pemesanan`
 --
 ALTER TABLE `temp_transaksi_pemesanan`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `transaksi_pembayaran`
 --
 ALTER TABLE `transaksi_pembayaran`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `transaksi_pembelian`
 --
 ALTER TABLE `transaksi_pembelian`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `transaksi_pemesanan`
 --
 ALTER TABLE `transaksi_pemesanan`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `transaksi_pemesanan_detail`
 --
 ALTER TABLE `transaksi_pemesanan_detail`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `transaksi_penjualan`
 --
 ALTER TABLE `transaksi_penjualan`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`idusers`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `absensi`
+--
+ALTER TABLE `absensi`
+  MODIFY `id_absen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `akses_user`
+--
+ALTER TABLE `akses_user`
+  MODIFY `id_akses` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `barang`
+--
+ALTER TABLE `barang`
+  MODIFY `id_barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `buka_tutup`
+--
+ALTER TABLE `buka_tutup`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `harga`
+--
+ALTER TABLE `harga`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=143;
+
+--
+-- AUTO_INCREMENT for table `kategori_menu`
+--
+ALTER TABLE `kategori_menu`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `lembur`
+--
+ALTER TABLE `lembur`
+  MODIFY `id_lembur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `menu`
+--
+ALTER TABLE `menu`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=148;
+
+--
+-- AUTO_INCREMENT for table `stok`
+--
+ALTER TABLE `stok`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=143;
+
+--
+-- AUTO_INCREMENT for table `supplier`
+--
+ALTER TABLE `supplier`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `temp_transaksi_pemesanan`
+--
+ALTER TABLE `temp_transaksi_pemesanan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `transaksi_pembayaran`
+--
+ALTER TABLE `transaksi_pembayaran`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `transaksi_pembelian`
+--
+ALTER TABLE `transaksi_pembelian`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `transaksi_pemesanan`
+--
+ALTER TABLE `transaksi_pemesanan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
+--
+-- AUTO_INCREMENT for table `transaksi_penjualan`
+--
+ALTER TABLE `transaksi_penjualan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `idusers` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -47,49 +47,52 @@ switch ($_GET['act']) {
                         <th>Tambah Stok</th>
                         <th>Jumlah Stok</th>
                         <th>Terjual</th>
-                        <th>Jumlah Akhir</th>
+                        <th>Sisa</th>
                         <th>Edit</th>
                         <th>Delete</th>
                       </tr>
                     </thead>
                     <tbody>
-                        <?php
-                        $tampil = $mysqli->query("SELECT * FROM barang
-                   order by id asc");
-                        $no = 1;
-                        while ($r = mysqli_fetch_array($tampil)) {
-                        ?>
-                          <tr>
-                            <td><?php echo "$no" ?></td>
-                            <td><?php echo "$r[nama_barang]" ?></td>
-                            <td><?php echo "$r[ket]" ?></td>
+                      <?php
+                      $tampil = $mysqli->query("SELECT * FROM barang
+                   order by id_barang asc");
+                      $no = 1;
+                      while ($r = mysqli_fetch_array($tampil)) {
+                      ?>
+                        <tr>
+                          <td><?php echo "$no" ?></td>
+                          <td><?php echo "$r[tgl]" ?></td>
+                          <td><?php echo "$r[nama]" ?></td>
+                          <td><?php echo "$r[tambah_stok]" ?></td>
+                          <td><?php echo "$r[jumlah]" ?></td>
+                          <td><?php echo "$r[terjual]" ?></td>
+                          <td><?php echo "$r[sisa]" ?></td>
+                          <td><a href="?pg=barang&act=edit&id_barang=<?php echo $r['id_barang'] ?>"><button type="button" class="btn bg-orange"><i class="fa fa-pencil-square-o"></i></button></a></td>
+                          <td><a href="?pg=barang&act=delete&id_barang=<?php echo $r['id_barang'] ?>"><button type="button" class="btn btn-info" onclick="return confirm('Apakah anda yakin akan menghapusnya?');"><i class="fa fa-trash-o"></i></button></a></td>
+                        </tr>
 
-                            <td><a href="?pg=barang&act=edit&id=<?php echo $r['id'] ?>"><button type="button" class="btn bg-orange"><i class="fa fa-pencil-square-o"></i></button></a></td>
-                            <td><a href="?pg=barang&act=delete&id=<?php echo $r['id'] ?>"><button type="button" class="btn btn-info" onclick="return confirm('Apakah anda yakin akan menghapusnya?');"><i class="fa fa-trash-o"></i></button></a></td>
-                          </tr>
-
-                        <?php
-                          $no++;
-                        }
-                        ?>
-                      </tbody>
-                    </table>
-                  </div>
+                      <?php
+                        $no++;
+                      }
+                      ?>
+                    </tbody>
+                  </table>
                 </div>
+              </div>
 
 
-              </div> <!-- /.col -->
-            </div>
-            <!-- /.row (main row) -->
-        </section> <!-- /.content -->
-      </div><!-- /.container -->
+            </div> <!-- /.col -->
+          </div>
+          <!-- /.row (main row) -->
+      </section> <!-- /.content -->
+    </div><!-- /.container -->
     </div>
   <?php
     break;
     // PROSES TAMBAH DATA menu //
   case 'add':
     if (isset($_POST['add'])) {
-      $query = $mysqli->query("INSERT INTO barang (id, id_barang, tanggal, nama_barang, tambah stok, terjual, jumlah_akhir) VALUES ('','$_POST[id_barang]','$_POST[tanggal]','$_POST[nama_barang]','$_POST[tambah_stok]','$_POST[terjual]','$_POST[jumlah_akhir]') ");
+      $query = $mysqli->query("INSERT INTO barang (id_barang, tgl, nama, tambah_stok, jumlah, terjual, sisa) VALUES ('$_POST[id_barang]','$_POST[tgl]','$_POST[nama]','$_POST[tambah_stok]','$_POST[jumlah]','$_POST[terjual]','$_POST[sisa]') ");
       echo "<script>window.location='home.php?pg=barang&act=view'</script>";
     }
   ?>
@@ -117,35 +120,32 @@ switch ($_GET['act']) {
                   <!-- form start -->
                   <form role="form" method="POST" action="">
                     <div class="box-body">
-                      <div class="form-group">
-                        <label class="form-label">Nama Kategori menu</label>
-                        <input name="nama_barang" type="text" class="form-control" required>
-                      </div>
+
                       <div class="form-group">
                         <label class="form-label">Tanggal</label>
-                        <input name="ket" type="text" class="form-control" required>
+                        <input name="tgl" type="date" class="form-control" required>
                       </div>
                       <div class="form-group">
                         <label class="form-label">Nama Barang</label>
-                        <input name="ket" type="text" class="form-control" required>
+                        <input name="nama" type="text" class="form-control" required>
                       </div>
                       <div class="form-group">
                         <label class="form-label">Tambah Stok</label>
-                        <input name="ket" type="text" class="form-control" required>
+                        <input name="tambah_stok" type="number" class="form-control" required>
                       </div>
                       <div class="form-group">
                         <label class="form-label">Jumlah Stok</label>
-                        <input name="ket" type="text" class="form-control" required>
+                        <input name="jumlah" type="number" class="form-control" required>
                       </div>
                       <div class="form-group">
                         <label class="form-label">Terjual</label>
-                        <input name="ket" type="text" class="form-control" required>
+                        <input name="terjual" type="number" class="form-control" required>
                       </div>
                       <div class="form-group">
-                        <label class="form-label">Jumlah Akhir</label>
-                        <input name="ket" type="text" class="form-control" required>
+                        <label class="form-label">Sisa</label>
+                        <input name="sisa" type="number" class="form-control" required>
                       </div>
-                    
+
                       </select>
                     </div>
 
@@ -184,12 +184,16 @@ switch ($_GET['act']) {
     break;
     // PROSES EDIT DATA menu //
   case 'edit':
-    $d = mysqli_fetch_array($mysqli->query("SELECT * FROM barang WHERE id='$_GET[id]'"));
+    $d = mysqli_fetch_array($mysqli->query("SELECT * FROM barang WHERE id_barang='$_GET[id_barang]'"));
     if (isset($_POST['update'])) {
 
-      $mysqli->query("UPDATE barang SET nama_barang='$_POST[nama_barang]', 
-    ket='$_POST[ket]'
-    WHERE id='$_POST[id]'");
+      $mysqli->query("UPDATE barang SET nama='$_POST[nama]', 
+    tgl='$_POST[tgl]',
+    jumlah='$_POST[jumlah]',
+    tambah_stok='$_POST[tambah_stok]',
+    terjual='$_POST[terjual]',
+    sisa='$_POST[sisa]'
+    WHERE id_barang='$_POST[id_barang]'");
       echo "<script>window.location='home.php?pg=barang&act=view'</script>";
     }
   ?>
@@ -217,41 +221,31 @@ switch ($_GET['act']) {
                   <!-- form start -->
                   <form role="form" method="POST" action="">
                     <div class="box-body">
-                      <input type="hidden" class="form-control" id="id" name="id" required value="<?php echo $d['id']; ?>">
+                      <input type="hidden" class="form-control" id="id_barang" name="id_barang" required value="<?php echo $d['id_barang']; ?>">
                       <div class="form-group">
                         <label class="form-label">Nama Kategori</label>
-                        <input name="nama_barang" type="text" class="form-control" value="<?php echo $d['nama_barang']; ?>" required>
+                        <input name="nama" type="text" class="form-control" value="<?php echo $d['nama']; ?>" required>
                       </div>
                       <div class="form-group">
                         <label class="form-label">Tanggal</label>
-                        <input name="ket" type="text" class="form-control" required>
-                      </div>
-                      <div class="form-group">
-                        <label class="form-label">Nama Barang</label>
-                        <input name="ket" type="text" class="form-control" required>
+                        <input name="tgl" type="date" class="form-control" value="<?php echo $d['tgl']; ?>" required>
                       </div>
                       <div class="form-group">
                         <label class="form-label">Tambah Stok</label>
-                        <input name="ket" type="text" class="form-control" required>
+                        <input name="tambah_stok" type="number" class="form-control" value="<?php echo $d['tambah_stok']; ?>" required>
                       </div>
                       <div class="form-group">
-                        <label class="form-label">Jumlah Stok</label>
-                        <input name="ket" type="text" class="form-control" required>
+                        <label class="form-label">Jumlah</label>
+                        <input name="jumlah" type="number" class="form-control" value="<?php echo $d['jumlah']; ?>" required>
                       </div>
                       <div class="form-group">
                         <label class="form-label">Terjual</label>
-                        <input name="ket" type="text" class="form-control" required>
+                        <input name="terjual" type="number" class="form-control" value="<?php echo $d['terjual']; ?>" required>
                       </div>
                       <div class="form-group">
-                        <label class="form-label">Jumlah Akhir</label>
-                        <input name="ket" type="text" class="form-control" required>
+                        <label class="form-label">Sisa</label>
+                        <input name="sisa" type="number" class="form-control" value="<?php echo $d['sisa']; ?>" required>
                       </div>
-                      <div class="form-group">
-                        <label class="form-label">Keterangan</label>
-                        <input name="ket" type="text" class="form-control" value="<?php echo $d['ket']; ?>">
-                      </div>
-
-
                       </select>
                     </div>
 
@@ -290,7 +284,7 @@ switch ($_GET['act']) {
 
     // PROSES HAPUS DATA menu //
   case 'delete':
-    $mysqli->query("DELETE FROM barang WHERE id='$_GET[id]'");
+    $mysqli->query("DELETE FROM barang WHERE id_barang='$_GET[id_barang]'");
     echo "<script>window.location='home.php?pg=barang&act=view'</script>";
     break;
 }

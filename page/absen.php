@@ -91,7 +91,7 @@ switch ($_GET['act']) {
       $query = $mysqli->query("INSERT INTO absensi (id_absen,nama,tgl_masuk,jam) VALUES ('','$_POST[nama]',,'$_POST[tgl_masuk]','$_POST[jam]') ");
       echo "<script>window.location='home.php?pg=absen&act=view'</script>";
     }
-    print_r($query);
+    //print_r($query);
   ?>
 
     <div class="content-wrapper">
@@ -170,7 +170,7 @@ switch ($_GET['act']) {
     $d = mysqli_fetch_array($mysqli->query("SELECT * FROM absensi WHERE id_absen='$_GET[id_absen]'"));
     if (isset($_POST['update'])) {
 
-      $mysqli->query("UPDATE absen SET nama='$_POST[nama]', 
+      $mysqli->query("UPDATE absensi SET nama='$_POST[nama]', 
     tgl_masuk='$_POST[tgl_masuk]',  
     jam='$_POST[jam]'
     
@@ -178,7 +178,7 @@ switch ($_GET['act']) {
       echo "<
       script>window.location='home.php?pg=absen&act=view'</>";
     }
-    var_dump($d);
+    //var_dump($d);
   ?>
 
     <div class="content-wrapper">

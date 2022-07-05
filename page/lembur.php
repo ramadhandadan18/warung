@@ -90,7 +90,7 @@ switch ($_GET['act']) {
       $query = $mysqli->query("INSERT INTO lembur (id_lembur,nama,jam,tgl) VALUES ('','$_POST[nama]','$_POST[jam]','$_POST[tgl]') ");
       echo "<script>window.location='home.php?pg=lembur&act=view'</script>";
     }
-    print_r($query);
+    //print_r($query);
   ?>
 
     <div class="content-wrapper">
@@ -175,7 +175,7 @@ switch ($_GET['act']) {
     WHERE id_lembur='$_POST[id_lembur]'");
       echo "<script>window.location='home.php?pg=lembur&act=view'</script>";
     }
-    var_dump($d);
+    //var_dump($d);
   ?>
 
     <div class="content-wrapper">
@@ -241,9 +241,7 @@ switch ($_GET['act']) {
       </div> <!-- /.col -->
     </div>
     <!-- /.row (main row) -->
-    </section> <!-- /.content -->
-    </div><!-- /.container -->
-    </div>
+
     <!-- /.content-wrapper -->
 
 

@@ -82,13 +82,12 @@ switch ($_GET['act']) {
         </section> <!-- /.content -->
       </div><!-- /.container -->
     </div>
-
   <?php
     break;
     // PROSES TAMBAH DATA menu //
   case 'add':
     if (isset($_POST['add'])) {
-      $query = $mysqli->query("INSERT INTO absensi (id_absen,nama,tgl_masuk,jam) VALUES ('','$_POST[nama]',,'$_POST[tgl_masuk]','$_POST[jam]') ");
+      $query = $mysqli->query("INSERT INTO absensi (id_absen,nama,jam,tgl_masuk) VALUES ('','$_POST[nama]','$_POST[jam]','$_POST[tgl_masuk]') ");
       echo "<script>window.location='home.php?pg=absen&act=view'</script>";
     }
     //print_r($query);
@@ -122,11 +121,11 @@ switch ($_GET['act']) {
                         <input name="nama" type="text" class="form-control" required>
                       </div>
                       <div class="form-group">
-                        <label class="form-label">Jam absen</label>
+                        <label class="form-label">Jam Masuk</label>
                         <input name="jam" type="time" class="form-control" required>
                       </div>
                       <div class="form-group">
-                        <label class="form-label">TGL absen</label>
+                        <label class="form-label">TGL Masuk</label>
                         <input name="tgl_masuk" type="date" class="form-control" required>
                       </div>
                       </select>
@@ -171,12 +170,10 @@ switch ($_GET['act']) {
     if (isset($_POST['update'])) {
 
       $mysqli->query("UPDATE absensi SET nama='$_POST[nama]', 
-    tgl_masuk='$_POST[tgl_masuk]',  
-    jam='$_POST[jam]'
-    
+    jam='$_POST[jam]',
+    tgl_masuk='$_POST[tgl_masuk]'
     WHERE id_absen='$_POST[id_absen]'");
-      echo "<
-      script>window.location='home.php?pg=absen&act=view'</>";
+      echo "<script>window.location='home.php?pg=absen&act=view'</script>";
     }
     //var_dump($d);
   ?>
@@ -186,11 +183,11 @@ switch ($_GET['act']) {
 
         <!-- Content Header (Page header) -->
         <section class="content-header">
-          <h1> Data absen </h1>
+          <h1> Data Absen </h1>
           <ol class="breadcrumb">
             <li><a href="?pg=dashboard"><i class="fa fa-dashboard"></i> Beranda</a></li>
-            <li class="active"><a href="?pg=absen&act=view">Data absen</a></li>
-            <li class="active">Update Data absen</li>
+            <li class="active"><a href="?pg=absen&act=view">Data Absen</a></li>
+            <li class="active">Update Data Absen</li>
           </ol>
         </section>
 
@@ -244,9 +241,7 @@ switch ($_GET['act']) {
       </div> <!-- /.col -->
     </div>
     <!-- /.row (main row) -->
-    </section> <!-- /.content -->
-    </div><!-- /.container -->
-    </div>
+
     <!-- /.content-wrapper -->
 
 

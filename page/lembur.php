@@ -122,11 +122,11 @@ switch ($_GET['act']) {
                       </div>
                       <div class="form-group">
                         <label class="form-label">Jam Lembur</label>
-                        <input name="time" type="time" class="form-control" required>
+                        <input name="jam" type="time" class="form-control" required>
                       </div>
                       <div class="form-group">
                         <label class="form-label">TGL Lembur</label>
-                        <input name="date" type="date" class="form-control" required>
+                        <input name="tgl" type="date" class="form-control" required>
                       </div>
                       </select>
                     </div>
@@ -208,11 +208,11 @@ switch ($_GET['act']) {
                       </div>
                       <div class="form-group">
                         <label class="form-label">Jam</label>
-                        <input name="time" type="time" class="form-control" value="<?php echo $d['jam']; ?>">
+                        <input name="jam" type="time" class="form-control" value="<?php echo $d['jam']; ?>">
                       </div>
                       <div class="form-group">
                         <label class="form-label">TGL</label>
-                        <input name="date" type="date" class="form-control" value="<?php echo $d['tgl']; ?>">
+                        <input name="tgl" type="date" class="form-control" value="<?php echo $d['tgl']; ?>">
                       </div>
                       </select>
                     </div>
